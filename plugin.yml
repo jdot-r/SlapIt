@@ -1,0 +1,8 @@
+---
+name: SlapIt
+version: 1.0.0
+api: [1.9.0]
+main: slapit\SlapIt
+author: PEMapModder
+website: https://github.com/PEMapModder/SlapIt
+...
