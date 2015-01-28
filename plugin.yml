@@ -5,4 +5,5 @@ api: [1.9.0]
 main: slapit\SlapIt
 author: PEMapModder
 website: https://github.com/PEMapModder/SlapIt
+load: STARTUP # load SlappableHuman when worlds are loaded
 ...
