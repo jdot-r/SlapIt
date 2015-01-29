@@ -13,6 +13,7 @@ use pocketmine\nbt\tag\Double;
 use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Float;
 use pocketmine\nbt\tag\Short;
+use pocketmine\nbt\tag\String;
 use pocketmine\permission\PermissibleBase;
 use pocketmine\permission\PermissionAttachment;
 use pocketmine\plugin\Plugin;
@@ -27,10 +28,10 @@ class SlappableHuman extends Human implements CommandSender{
 		parent::__construct($chunk, $nbt);
 		$this->perm = new PermissibleBase($this);
 	}
-	public static function create(Position $pos, CmdArgMap $args){
+	public static function cmdCreate(Position $pos, CmdArgMap $args){
 		$pos = new Location($pos->x, $pos->y, $pos->z, $args->getOptArg("yaw", 0.0), $args->getOptArg("pitch", 0.0), $pos->getLevel());
 		$nbt = new Compound;
-		$nbt->NameTag = $args->getReqArg(0);
+		$nbt->NameTag = new String($args->getOptArg("name", "   Untitled\nSlappableHuman"));
 		$nbt->Pos = new Enum("Pos", [
 			new Double(0, $pos->x),
 			new Double(1, $pos->y),
@@ -65,6 +66,14 @@ class SlappableHuman extends Human implements CommandSender{
 			new Byte("InAction", 0)
 		]);
 		return new self($pos->getLevel()->getChunk($pos->getFloorX() >> 4, $pos->getFloorZ() >> 4, true), $nbt);
+	}
+	public static function create(Position $pos, $nametag, $otherArgs = []){
+		$map = new CmdArgMap([]);
+		$map->args["name"] = $nametag;
+		foreach($otherArgs as $key => $value){
+			$map->args[$key] = $value;
+		}
+		return self::cmdCreate($pos, $map);
 	}
 	public function getServer(){
 		return $this->getLevel()->getServer();

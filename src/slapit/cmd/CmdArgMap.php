@@ -4,9 +4,9 @@ namespace slapit\cmd;
 
 class CmdArgMap{
 	/** @var string[] */
-	private $required = [];
+	public $required = [];
 	/** @var string[]|bool[] */
-	private $args = [];
+	public $args = [];
 	public function __construct(array $args){
 		for($i = 0; $i < count($args); $i++){
 			if($args[$i]{0} === ","){
